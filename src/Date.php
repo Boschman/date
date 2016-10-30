@@ -243,7 +243,16 @@ class Date extends Carbon
 
                 // Short notations.
                 if (in_array($character, ['D', 'M'])) {
-                    $translated = mb_substr($translated, 0, 3);
+                    $toTranslate    = strtolower($original);
+                    $sortTranslated = $lang->trans($toTranslate);
+
+                    if ($sortTranslated === $toTranslate) {
+                        // use the first 3 characters as short notation
+                        $translated = mb_substr($translated, 0, 3);
+                    } else {
+                        // use translated version
+                        $translated = $sortTranslated;
+                    }
                 }
 
                 // Add to replace list.
